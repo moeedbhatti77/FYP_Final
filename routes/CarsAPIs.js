@@ -6,7 +6,6 @@ const { secret } = require("../utils/utils");
 const getCarsAdvancedSearch = async (body, status = true) => {
   try {
     if (status) {
-      const total = await Car.count({ status: true });
       min_price = body.minPrice ? { price: { $gte: body.minPrice } } : {};
       min_engine = body.minEngine ? { engine: { $gte: body.minEngine } } : {};
       max_engine = body.maxEngine ? { engine: { $lte: body.maxEngine } } : {};
@@ -67,7 +66,6 @@ const getCarsAdvancedSearch = async (body, status = true) => {
         ],
       }).sort([["createdAt", -1]]);
       return {
-        total,
         cars,
       };
     }
@@ -80,7 +78,6 @@ const getCarsAdvancedSearch = async (body, status = true) => {
 const getCarsBasicSearch = async (body, status = true) => {
   try {
     if (status) {
-      const total = await Car.count({ status: true });
       max_model_year = body.maxModelYear
         ? { modelYear: { $lte: body.maxModelYear } }
         : {};
@@ -101,11 +98,9 @@ const getCarsBasicSearch = async (body, status = true) => {
         ],
       }).sort([["createdAt", -1]]);
       return {
-        total,
         cars,
       };
     } else {
-      const total = await Car.count();
       max_model_year = body.maxModelYear
         ? { modelYear: { $lte: body.maxModelYear } }
         : {};
@@ -125,7 +120,6 @@ const getCarsBasicSearch = async (body, status = true) => {
         ],
       }).sort([["createdAt", -1]]);
       return {
-        total,
         cars,
       };
     }
@@ -199,10 +193,8 @@ app.post("/advanced_search", async (req, res) => {
 app.get("/cars", async (req, res) => {
   const token = req.header("x-access-token");
   if (token === "null" || !token) {
-    const total = await Car.count({ status: true });
     cars = await getCars();
     return res.json({
-      total,
       cars,
     });
   }
@@ -214,17 +206,13 @@ app.get("/cars", async (req, res) => {
         email: email,
       });
       if (user.role === "admin") {
-        const total = await Car.count();
         cars = await getCars(false);
         return res.json({
-          total,
           cars,
         });
       } else {
-        const total = await Car.count({ status: true });
         cars = await getCars();
         return res.json({
-          total,
           cars,
         });
       }
