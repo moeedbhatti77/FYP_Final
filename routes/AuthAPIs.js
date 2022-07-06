@@ -5,7 +5,8 @@ const Users = require("../models/UsersModel");
 const Chats = require("../models/ChatModel");
 const multer = require("multer");
 const { secret } = require("../utils/utils");
-const IMAGE_FOLDER = "../build/uploads/";
+const path = require("path");
+const IMAGE_FOLDER = path.resolve(__dirname, "../build/uploads");
 const fs = require("fs");
 
 const fileStorageEngine = multer.diskStorage({
