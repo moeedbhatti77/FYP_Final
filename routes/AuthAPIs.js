@@ -24,11 +24,14 @@ const deleteImage = (image) => {
   try {
     if (fs.existsSync(IMAGE_FOLDER + image)) {
       //file exists
-      fs.unlink(IMAGE_FOLDER + image, function (err) {
-        if (err) throw err;
-        // if no error, file has been deleted successfully
-        console.log("File deleted!");
-      });
+      if (image !== "mr-anonymous.png") {
+        fs.unlink(IMAGE_FOLDER + image, function (err) {
+          if (err) throw err;
+          // if no error, file has been deleted successfully
+          console.log("File deleted!");
+        });
+        console.log("Default Image Can not be deleted");
+      }
     } else {
       console.log("File Don't exist");
       return;
@@ -147,6 +150,7 @@ app.put("/profile/:id", upload.array("portrait"), async function (req, res) {
         user.cNumber = req.body.cNumber;
         if (req.files[0]) {
           deleteImage(user.portrait);
+          console.log(re.files[0].filename);
           user.portrait = req.files[0].filename;
         }
         await user.save();

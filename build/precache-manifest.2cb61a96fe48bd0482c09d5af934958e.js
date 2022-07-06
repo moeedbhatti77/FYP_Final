@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "dd76a5692c1a8461f2b8",
+    "revision": "91119553107f7b10360e",
     "url": "./static/css/main.c95061c9.chunk.css"
   },
   {
-    "revision": "dd76a5692c1a8461f2b8",
-    "url": "./static/js/main.38957f1e.chunk.js"
+    "revision": "91119553107f7b10360e",
+    "url": "./static/js/main.5c7402b7.chunk.js"
   },
   {
     "revision": "8c97409f0ee389fe75da",
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "./static/media/Chat Logo.a0d26d79.png"
   },
   {
-    "revision": "eb619340c33f4fb90099945c9cd23639",
+    "revision": "9b548615fb26c17165206959135ee401",
     "url": "./index.html"
   }
 ];
