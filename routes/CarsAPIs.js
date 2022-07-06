@@ -230,7 +230,6 @@ app.post("/basic_search", async (req, res) => {
 // Advanced Search with all fields
 app.post("/advanced_search", async (req, res) => {
   const body = req.body;
-  console.log(body);
   const token = req.header("x-access-token");
   if (token === "null" || !token) {
     cars = await getCarsAdvancedSearch(body);
