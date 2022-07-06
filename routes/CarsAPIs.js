@@ -6,23 +6,26 @@ const { secret } = require("../utils/utils");
 const getCarsAdvancedSearch = async (body, status = true) => {
   try {
     if (status) {
-      min_price = body.minPrice ? { price: { $gte: body.minPrice } } : {};
-      min_engine = body.minEngine ? { engine: { $gte: body.minEngine } } : {};
-      max_engine = body.maxEngine ? { engine: { $lte: body.maxEngine } } : {};
-      max_price = body.maxPrice ? { price: { $lte: body.maxPrice } } : {};
-      min_mileage = body.minMileage
-        ? { mileage: { $gte: body.minMileage } }
-        : {};
-      max_mileage = body.maxMileage
-        ? { mileage: { $lte: body.maxMileage } }
-        : {};
-      max_model_year = body.maxModelYear
-        ? { modelYear: { $lte: body.maxModelYear } }
-        : {};
-      min_model_year = body.minModelYear
-        ? { modelYear: { $gte: body.minModelYear } }
-        : {};
-
+      min_price =
+        body.minPrice !== "" ? { price: { $gte: body.minPrice } } : {};
+      min_engine =
+        body.minEngine !== "" ? { engine: { $gte: body.minEngine } } : {};
+      max_engine =
+        body.maxEngine !== "" ? { engine: { $lte: body.maxEngine } } : {};
+      max_price =
+        body.maxPrice !== "" ? { price: { $lte: body.maxPrice } } : {};
+      min_mileage =
+        body.minMileage !== "" ? { mileage: { $gte: body.minMileage } } : {};
+      max_mileage =
+        body.maxMileage !== "" ? { mileage: { $lte: body.maxMileage } } : {};
+      max_model_year =
+        body.maxModelYear !== ""
+          ? { modelYear: { $lte: body.maxModelYear } }
+          : {};
+      min_model_year =
+        body.minModelYear !== ""
+          ? { modelYear: { $gte: body.minModelYear } }
+          : {};
       const cars = await Car.find({
         $and: [
           {
@@ -63,6 +66,71 @@ const getCarsAdvancedSearch = async (body, status = true) => {
           { $and: [min_mileage, max_mileage] },
           { $and: [max_model_year, min_model_year] },
           { status: true },
+        ],
+      }).sort([["createdAt", -1]]);
+      return {
+        cars,
+      };
+    } else {
+      min_price =
+        body.minPrice !== "" ? { price: { $gte: body.minPrice } } : {};
+      min_engine =
+        body.minEngine !== "" ? { engine: { $gte: body.minEngine } } : {};
+      max_engine =
+        body.maxEngine !== "" ? { engine: { $lte: body.maxEngine } } : {};
+      max_price =
+        body.maxPrice !== "" ? { price: { $lte: body.maxPrice } } : {};
+      min_mileage =
+        body.minMileage !== "" ? { mileage: { $gte: body.minMileage } } : {};
+      max_mileage =
+        body.maxMileage !== "" ? { mileage: { $lte: body.maxMileage } } : {};
+      max_model_year =
+        body.maxModelYear !== ""
+          ? { modelYear: { $lte: body.maxModelYear } }
+          : {};
+      min_model_year =
+        body.minModelYear !== ""
+          ? { modelYear: { $gte: body.minModelYear } }
+          : {};
+      const cars = await Car.find({
+        $and: [
+          {
+            manufacturer: {
+              $regex: body.manufacturer ?? "",
+              $options: "i",
+            },
+          },
+          { model: { $regex: body.model ?? "", $options: "i" } },
+          {
+            version: {
+              $regex: body.version ?? "",
+              $options: "i",
+            },
+          },
+          {
+            assembly: {
+              $regex: body.assembly ?? "",
+              $options: "i",
+            },
+          },
+          {
+            transmission: {
+              $regex: body.transmission ?? "",
+              $options: "i",
+            },
+          },
+          { color: { $regex: body.color ?? "", $options: "i" } },
+          { city: { $regex: body.city ?? "", $options: "i" } },
+          {
+            engineType: {
+              $regex: body.engineType ?? "",
+              $options: "i",
+            },
+          },
+          { $and: [max_price, min_price] },
+          { $and: [max_engine, min_engine] },
+          { $and: [min_mileage, max_mileage] },
+          { $and: [max_model_year, min_model_year] },
         ],
       }).sort([["createdAt", -1]]);
       return {
