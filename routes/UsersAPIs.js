@@ -134,7 +134,7 @@ app.post("/reset-password", async (req, res) => {
           user.expireToken = Date.now() + 720000;
           await user.save().then(async (result) => {
             output = `<h1>Password Reset For User ${user.fName}  ${user.lName}</h1>
-            <h3><a href=${window.location.hostname}/reset-password/${token}>Click Me</a> to Reset Password (It is Usable for Only 30 Minutes)</h3>`;
+            <h3><a href=https://hm-motors.herokuapp.com/reset-password/${token}>Click Me</a> to Reset Password (It is Usable for Only 30 Minutes)</h3>`;
             await transporter.sendMail({
               from: '"HM Motors" hmmotors425@gmail.com', // sender address
               to: user.email, // list of receivers
