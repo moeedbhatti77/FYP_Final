@@ -150,7 +150,6 @@ app.put("/profile/:id", upload.array("portrait"), async function (req, res) {
         user.cNumber = req.body.cNumber;
         if (req.files[0]) {
           deleteImage(user.portrait);
-          console.log(re.files[0].filename);
           user.portrait = req.files[0].filename;
         }
         await user.save();
