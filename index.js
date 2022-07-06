@@ -53,10 +53,12 @@ io.on("connection", async (socket) => {
 });
 
 // Defining Port for Server
-
-server.listen(port, () =>
-  console.log(`Application listening on port ${port}!`)
-);
+var os = require("os");
+var hostname = os.hostname();
+server.listen(port, () => {
+  console.log(hostname);
+  console.log(`Application listening on port ${port}!`);
+});
 
 // Connecting to MongoDB
 
