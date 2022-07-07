@@ -387,6 +387,7 @@ app.put("/cars/:id", upload.array("newImages"), async (req, res) => {
       });
       if (user.role.toLowerCase() === "admin") {
         try {
+          console.log(req.body);
           var car = await Car.findById(req.params.id);
           car.model = req.body.model;
           car.price = req.body.price;
@@ -400,6 +401,7 @@ app.put("/cars/:id", upload.array("newImages"), async (req, res) => {
           car.engine = req.body.engine;
           car.engineType = req.body.engineType;
           car.assembly = req.body.assembly;
+          car.manufacturer = req.body.manufacturer;
           car.transmission = req.body.transmission;
           if (req.body?.salePrice) {
             car.salePrice = req.body.salePrice;
